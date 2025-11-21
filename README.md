@@ -62,7 +62,7 @@ const crackTime = possibilities / guessesPerSec;
 1. Clone the repository:
 
 ```
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+git clone https://github.com/mdebabrata2004/Smart-Password-Strength-Detector.git
 ```
 
 2. Open `index.html` in any browser.
