@@ -2,10 +2,9 @@
 // Core logic: name/dob analysis, entropy estimate, secure generator, helpers.
 
 (function(global){
-  // --- helpers ---
+  
   function safeText(s){ return (s||'').toString().trim(); }
 
-  // generate simple name-derived tokens (lowercase, initials, concat, prefixes)
   function partsFromName(name){
     if(!name) return [];
     const cleaned = name.normalize('NFKD').replace(/[^\p{L}\s'-]/gu,' ').toLowerCase();
@@ -16,17 +15,17 @@
       if(t.length>1) parts.add(t.slice(0,1));
     });
     if(tokens.length>1){
-      parts.add(tokens.join(''));               // concatenated
-      parts.add(tokens.map(t=>t[0]).join('')); // initials
+      parts.add(tokens.join(''));               
+      parts.add(tokens.map(t=>t[0]).join('')); 
     }
-    // prefixes/suffixes (first 3-6 chars)
+    
     tokens.forEach(t=>{
       for(let l=2;l<=Math.min(6,t.length);l++) parts.add(t.slice(0,l));
     });
     return Array.from(parts).filter(Boolean);
   }
 
-  // DOB patterns extractor (from yyyy-mm-dd)
+  // DOB patterns extractor
   function dobPatterns(dob){
     if(!dob) return [];
     const [y,m,d] = dob.split('-');
@@ -41,7 +40,7 @@
     return Array.from(patterns).filter(Boolean);
   }
 
-  // analyze password for name/dob inclusion & common sequences
+  
   function analyzePasswordAgainstNameDob(pwd, name, dob){
     pwd = pwd||'';
     const pwdLow = pwd.toLowerCase();
@@ -55,7 +54,7 @@
       if(p && pwd.includes(p)) warnings.push({type:'dob', token:p, text:`Password contains DOB pattern: ${p}`});
     });
 
-    // check simple separators like name@yyyy or name.2004 etc.
+    
     const separators = ['@','.','_','-'];
     separators.forEach(sep=>{
       nameParts.forEach(p=>{
@@ -68,13 +67,13 @@
       });
     });
 
-    // years check (broad)
+   
     for(let y=1950;y<=2035;y++){
       const s = String(y);
       if(pwd.includes(s)) warnings.push({type:'year', token:s, text:`Contains year: ${s}`});
     }
 
-    // common words/sequences
+    
     const seqs = ['1234','4321','abcd','qwerty','password','pass','letmein'];
     seqs.forEach(s=>{
       if(pwd.toLowerCase().includes(s)) warnings.push({type:'common', token:s, text:`Common sequence/word: ${s}`});
@@ -84,7 +83,7 @@
     return warnings;
   }
 
-  // entropy estimate (pool heuristic)
+  
   function estimateEntropy(pwd){
     if(!pwd) return {entropy:0,pool:1};
     const hasLower = /[a-z]/.test(pwd);
@@ -101,7 +100,7 @@
     return {entropy, pool};
   }
 
-  // humanize seconds to y d h etc.
+  
   function secsToHuman(s){
     if(!isFinite(s)) return '∞';
     let rem = Math.floor(s);
@@ -119,14 +118,14 @@
     return parts.slice(0,3).join(' ') || '0s';
   }
 
-  // generate secure random bytes
+  
   function secureRandomBytes(len){
     const arr = new Uint8Array(len);
     crypto.getRandomValues(arr);
     return arr;
   }
 
-  // generate strong password but AVOID forbidden substrings (heuristic)
+  
   function generateAvoiding(len, pools, forbiddenList){
     let chars = '';
     if(pools.lower) chars += 'abcdefghijklmnopqrstuvwxyz';
@@ -154,7 +153,7 @@
       out.push(ch);
     }
 
-    // ensure at least one char from each selected class
+    
     const must = [];
     if(pools.lower) must.push('abcdefghijklmnopqrstuvwxyz');
     if(pools.upper) must.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -169,21 +168,19 @@
     return out.join('');
   }
 
-  // quick targeted-attack estimate (heuristic)
-  // estimates how many guesses an attacker who tries name+year/separators variants would need
+ 
   function targetedGuessEstimate(name, dob){
-    // Heuristic counts:
-    // name variants ~ tokens + capitalized + initials -> limit to e.g. 12
+    
     const nameParts = partsFromName(name);
-    const nameVariants = Math.min(50, Math.max(1, nameParts.length * 3)); // safety
+    const nameVariants = Math.min(50, Math.max(1, nameParts.length * 3)); 
     const separators = ['','@','.','_','-'];
     const years = dobPatterns(dob);
-    const yearVariants = Math.max(1, Math.min(20, years.length + 5)); // include adjacent years heuristically
+    const yearVariants = Math.max(1, Math.min(20, years.length + 5));
     const total = nameVariants * separators.length * yearVariants;
     return {total, nameVariants, separators:separators.length, yearVariants};
   }
 
-  // expose
+
   global.PasswordLogic = {
     safeText, partsFromName, dobPatterns, analyzePasswordAgainstNameDob,
     estimateEntropy, secsToHuman, secureRandomBytes, generateAvoiding,
@@ -191,3 +188,4 @@
   };
 
 })(window);
+
