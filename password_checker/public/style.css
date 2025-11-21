@@ -1,0 +1,270 @@
+:root {
+  --bg: #071026;
+  --card: #081622;
+  --accent: #7dd3fc;
+  --accent-hover: #5bb8e6;
+  --muted: #9fb3c8;
+  --warn-bg: rgba(255, 80, 80, 0.12);
+  --warn-color: #ff6b6b;
+  --text-color: #e6f3fb;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.15);
+  --shadow-light: rgba(125, 211, 252, 0.3);
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  --font-family: 'Inter', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: linear-gradient(180deg, var(--bg), #052033, #e6f3fb,#7dd3fc);
+  color: var(--text-color);
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  /* Add these two lines */
+  background-size: 200% 200%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card {
+  max-width: 880px;
+  width: 100%;
+  margin: 18px auto;
+  padding: 30px 40px;
+  border-radius: 16px;
+
+  /* একটি সলিড এবং খুবই গাঢ় নীল রঙ */
+  background: #0A1929;
+
+  /* ডার্ক থিমের জন্য একটি মানানসই বর্ডার */
+  border: 1px solid rgba(125, 211, 252, 0.2);
+
+  /* একটি গভীর কালো শ্যাডো এবং হালকা নীল আভা */
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 5px rgba(125, 211, 252, 0.1);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1 {
+  margin: 0 0 15px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  outline-offset: 2px;
+  outline-color: transparent;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus {
+  border-color: var(--accent);
+  background: rgba(125, 211, 252, 0.1);
+  outline-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button {
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent);
+  color: #013033;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  flex: 1 1 150px;
+  max-width: 220px;
+  text-align: center;
+}
+
+button:hover,
+button:focus {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(93, 184, 230, 0.5);
+}
+
+.results {
+  margin-top: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px 25px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px rgba(125, 211, 252, 0.15);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 120px;
+}
+
+.results h2 {
+  margin-top: 0;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.warn {
+  background: var(--warn-bg);
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: var(--warn-color);
+  font-weight: 600;
+  box-shadow: 0 0 8px var(--warn-color);
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.generated {
+  margin-top: 25px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 20px 25px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 12px rgba(125, 211, 252, 0.2);
+  font-size: 16px;
+  color: var(--text-color);
+  user-select: text;
+}
+
+.generated h2 {
+  margin-top: 0;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  user-select: all;
+  transition: background-color 0.3s ease;
+}
+
+pre:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.gen-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+.gen-actions button {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  box-shadow: none;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  max-width: 120px;
+}
+
+.gen-actions button:hover,
+.gen-actions button:focus {
+  background-color: var(--accent);
+  color: #013033;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.gen-actions button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+footer {
+  margin-top: 30px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+  user-select: none;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive adjustments */
+@media (min-width: 700px) {
+  .controls {
+    justify-content: flex-start;
+  }
+  button {
+    flex: 0 0 auto;
+  }
+}

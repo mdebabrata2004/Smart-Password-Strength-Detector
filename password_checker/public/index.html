@@ -1,0 +1,57 @@
+<!-- FILE: public/index.html -->
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Password Checker </title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="card">
+ <h1> Password Safety — Name and Date of Birth Analyzer </h1>
+
+
+<label>Full Name</label>
+<input id="fullname" type="text" placeholder="Enter your full name" />
+
+
+<label>Date of Birth</label>
+<input id="dob" type="date" />
+
+
+<label>Password</label>
+<input id="pwd" type="password" placeholder="Enter your password" />
+
+
+<div class="controls">
+<button id="checkBtn">Analyze</button>
+<button id="showBtn">Show/Hide</button>
+<button id="genBtn">Generate Strong Password</button>
+</div>
+
+
+<section class="results">
+<h2>Result</h2>
+<div id="warnings" class="warn"></div>
+<div id="entropy"></div>
+<div id="times"></div>
+<div id="analysis"></div>
+</section>
+
+
+<section class="generated">
+<h2>Suggested Password (Secure)</h2>
+<pre id="generated">-</pre>
+<div class="gen-actions"><button id="copyBtn">Copy</button></div>
+</section>
+
+
+<footer>© Copyright 2025, Debabrata Mondal</footer>
+</main>
+
+<script src="main.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
